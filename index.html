@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SST Automático | Generador Nivel 1</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 3D Canvas Background -->
+    <canvas id="bg-3d"></canvas>
+
+    <!-- Netflix-style Intro Splash -->
+    <div id="intro-splash" class="intro-overlay">
+        <div class="intro-content">
+            <img src="logowa.png" alt="Waffles Tech" class="intro-logo">
+            <div class="intro-disclaimer">
+                <p>Los archivos se almacenan provisionalmente en tu computadora.</p>
+                <p><strong>Waffles Tech</strong> no guarda tus datos.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div id="app" class="app-container">
+        
+        <div class="top-branding">
+            <img src="logowa.png" alt="Waffles Tech" class="waffles-tech-logo">
+        </div>
+
+        <header class="app-header hidden" id="main-app-header">
+            <div class="logo">
+                <img src="logowa.png" alt="Waffles Tech" style="height: 40px; margin-right: 10px;">
+                <h1>Sistema Automático de SST <span class="badge">Pequeña Minería y Formalización</span></h1>
+            </div>
+            <p class="subtitle">De cero documentos a cumplimiento SST en minutos.</p>
+            <p style="color: var(--accent); font-weight: 500; font-size: 0.9rem; margin-top: 0.5rem;">Cumple con la Ley N° 29783 y el D.S. N° 024-2016-EM sin complicarte.</p>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Section 0: Landing 3D -->
+            <section id="landing-section" class="view-section active">
+                <div class="landing-content glass-panel">
+                    <div class="landing-logo">
+                        <img src="logowa.png" alt="Waffles Tech" style="height: 60px;">
+                        <h1>SST Automático</h1>
+                    </div>
+                    <h2 class="hero-title">Tu sistema SST listo y firmado en un clic.</h2>
+                    <p class="hero-subtitle">Dedicado a pequeñas empresas y a Mineros en formalización. De cero documentos a cumplimiento normativo en minutos. Cumple con la Ley N° 29783 y el D.S. N° 024-2016-EM sin complicarte.</p>
+                    <button id="btn-enter-app" class="btn btn-primary btn-large cta-btn">
+                        Generar mi sistema SST <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                    
+                    <div class="landing-footer">
+                        <span class="waffles-tech">Designed by <strong>Waffles Tech</strong></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1: Configuration Form -->
+            <section id="config-section" class="view-section hidden">
+                <div class="card form-card glass-panel">
+                    <div class="card-header">
+                        <h2><i class="ph ph-buildings"></i> Configuración Inicial</h2>
+                        <p>Tu sistema SST listo y firmado en un clic. Dirigido especialmente a pequeñas empresas y minería en vías de formalización.</p>
+                    </div>
+                    <form id="operation-form" class="operation-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="razonSocial">Razón Social o Nombre de Concesión</label>
+                                <input type="text" id="razonSocial" name="razonSocial" required placeholder="Ej: Minera El Sol S.A.C.">
+                            </div>
+                            <div class="form-group">
+                                <label for="ruc">RUC / DNI Titular</label>
+                                <input type="text" id="ruc" name="ruc" required placeholder="Ej: 20123456789">
+                            </div>
+                            <div class="form-group">
+                                <label for="representante">Representante Legal / Titular</label>
+                                <input type="text" id="representante" name="representante" required placeholder="Nombre completo">
+                            </div>
+                            <div class="form-group">
+                                <label for="dniRepresentante">DNI del Representante</label>
+                                <input type="text" id="dniRepresentante" name="dniRepresentante" required placeholder="DNI">
+                            </div>
+                            <div class="form-group">
+                                <label for="ubicacion">Ubicación de la Labor (Concesión)</label>
+                                <input type="text" id="ubicacion" name="ubicacion" required placeholder="Centro Poblado, Distrito, Provincia, Región">
+                            </div>
+                            <div class="form-group">
+                                <label for="numTrabajadores">Número de Trabajadores</label>
+                                <input type="number" id="numTrabajadores" name="numTrabajadores" required placeholder="Ej: 15" min="1">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="actividad">Actividad Principal</label>
+                                <input type="text" id="actividad" name="actividad" required placeholder="Ej: Extracción subterránea de minerales auríferos">
+                            </div>
+                            <div class="form-group">
+                                <label for="logoEmpresa">Logo de la Empresa (Opcional)</label>
+                                <input type="file" id="logoEmpresa" name="logoEmpresa" accept="image/*" style="padding: 0.5rem; background: rgba(15, 23, 42, 0.3);">
+                            </div>
+                            <div class="form-group">
+                                <label for="firmaEmpresa">Firma del Titular (Opcional)</label>
+                                <input type="file" id="firmaEmpresa" name="firmaEmpresa" accept="image/*" style="padding: 0.5rem; background: rgba(15, 23, 42, 0.3);">
+                            </div>
+                            <div class="form-group">
+                                <label for="nombreSupervisor">Supervisor SST / Presidente Comité</label>
+                                <input type="text" id="nombreSupervisor" name="nombreSupervisor" required placeholder="Nombre completo del responsable">
+                            </div>
+                            <div class="form-group">
+                                <label for="versionDoc">Versión Documental</label>
+                                <input type="text" id="versionDoc" name="versionDoc" required value="01" placeholder="Ej: 01">
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaDoc">Fecha de Actualización</label>
+                                <input type="date" id="fechaDoc" name="fechaDoc" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large">
+                                <i class="ph ph-magic-wand"></i> Generar Documentos
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Section 2: Dashboard -->
+            <section id="dashboard-section" class="view-section hidden">
+                <div class="dashboard-header">
+                    <div class="operation-info glass-panel">
+                        <div class="op-header">
+                            <h2><i class="ph ph-briefcase"></i> <span id="display-razonSocial"></span></h2>
+                            <div class="header-actions">
+                                <button id="btn-simular" class="btn btn-danger btn-small" style="background: #ef4444; color: white;">
+                                    <i class="ph ph-siren"></i> Simular fiscalización
+                                </button>
+                                <button id="btn-download-all" class="btn btn-primary btn-small">
+                                    <i class="ph-bold ph-download-simple"></i> Descargar Todo
+                                </button>
+                                <button id="btn-edit-config" class="btn btn-secondary btn-small">
+                                    <i class="ph ph-pencil-simple"></i> Editar Datos
+                                </button>
+                            </div>
+                        </div>
+                        <div class="op-meta">
+                            <span class="meta-item"><i class="ph ph-users"></i> <span id="display-trabajadores"></span> Trabajadores</span>
+                            <span class="meta-item"><i class="ph ph-map-pin"></i> <span id="display-ubicacion"></span></span>
+                        </div>
+                        <!-- SST Professional Validation Declaration -->
+                        <div class="declaration-panel glass-panel">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="declaration-check">
+                                <span class="checkmark"></span>
+                                <span class="declaration-text">Declaro que la información ingresada es correcta y que validaré los documentos con un profesional SST.</span>
+                            </label>
+                        </div>
+
+                        <!-- Alert for Committee vs Supervisor -->
+                        <div id="sst-organ-alert" class="alert info-alert" style="margin-top: 1rem;">
+                            <i class="ph ph-info"></i>
+                            <span id="sst-organ-text"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="documents-grid" id="documents-grid">
+                    <!-- Cards will be generated here by JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Preview/Print -->
+    <div id="document-modal" class="modal hidden">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2 id="modal-doc-title">Documento</h2>
+                <div class="modal-actions">
+                    <button id="btn-word" type="button" class="btn btn-secondary">
+                        <i class="ph ph-file-doc"></i> Descargar Word
+                    </button>
+                    <button id="btn-print" type="button" class="btn btn-primary">
+                        <i class="ph ph-printer"></i> Imprimir / PDF
+                    </button>
+                    <button id="btn-close-modal" type="button" class="btn btn-icon btn-close">
+                        <i class="ph ph-x"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body print-area" id="print-area">
+                <!-- Document content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Inspection Simulation -->
+    <div id="inspection-modal" class="modal hidden">
+        <div class="modal-content glass-panel" style="max-width: 500px; height: auto;">
+            <div class="modal-header" style="background: #fee2e2; color: #b91c1c; border-bottom: 2px solid #ef4444;">
+                <h2><i class="ph-fill ph-warning-circle"></i> Alerta de Fiscalización SUNAFIL</h2>
+                <button id="btn-close-inspection" class="btn btn-icon btn-close">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="background: white; padding: 2rem;">
+                <p style="margin-bottom: 1.5rem; color: #475569; font-weight: 500;">
+                    Se ha detectado que tu sistema SST aún no ha sido descargado e impreso. En una fiscalización actual, tendrías las siguientes multas:
+                </p>
+                <ul style="list-style: none; padding: 0; font-size: 1.1rem;">
+                    <li style="margin-bottom: 10px; color: #b91c1c;">
+                        <i class="ph-bold ph-x-circle" style="color: #ef4444; margin-right: 8px;"></i> Falta IPERC actualizado
+                    </li>
+                    <li style="margin-bottom: 10px; color: #b91c1c;">
+                        <i class="ph-bold ph-x-circle" style="color: #ef4444; margin-right: 8px;"></i> No hay registro de EPP firmado
+                    </li>
+                    <li style="margin-bottom: 10px; color: #b91c1c;">
+                        <i class="ph-bold ph-x-circle" style="color: #ef4444; margin-right: 8px;"></i> RISST no aprobado
+                    </li>
+                    <li style="margin-bottom: 10px; color: #b91c1c;">
+                        <i class="ph-bold ph-warning" style="color: #f59e0b; margin-right: 8px;"></i> Comité / Supervisor sin actas
+                    </li>
+                </ul>
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button class="btn btn-primary btn-large" onclick="document.getElementById('inspection-modal').classList.remove('active')">
+                        ¡Entendido! Generaré mis documentos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Bubble -->
+    <div id="ai-assistant" class="ai-bubble hidden">
+        <div class="ai-avatar">
+            <i class="ph-fill ph-robot"></i>
+        </div>
+        <div class="ai-message">
+            <p id="ai-text">...</p>
+        </div>
+        <button id="btn-close-ai" class="ai-close"><i class="ph ph-x"></i></button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scene3d.js"></script>
+    <script src="templates.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
